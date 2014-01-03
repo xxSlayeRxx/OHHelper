@@ -1,4 +1,4 @@
 OHHelper
 ========
 
-To jest "Otaku Helper" app pomocnika. Kopiuje linki do EPS z linku strony anime.
+To jest program rozszerzajacy "Otaku Helper". Kopiuje linki do epków z linku strony anime.
