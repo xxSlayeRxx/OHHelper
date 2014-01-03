@@ -1,0 +1,238 @@
+﻿<Window
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+    x:Class="OHHelper.MainWindow"
+    xmlns:my="clr-namespace:OHHelper"
+	xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+    Title="OHHelper" Height="350" Width="525" Background="#FF2D2D2D">
+    <Window.DataContext>
+        <my:MainWindowViewModel />
+    </Window.DataContext>
+    <Window.Resources>
+
+        <DataTemplate x:Key="AnimeLayout">
+            <DataTemplate.Resources>
+            </DataTemplate.Resources>
+            <Grid Focusable="True">
+                <StackPanel HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto"
+                            Grid.IsSharedSizeScope="True" UseLayoutRounding="False" Orientation="Vertical"
+                            Focusable="True">
+                    <DockPanel HorizontalAlignment="Stretch" Height="Auto" LastChildFill="False"
+                               VerticalAlignment="Stretch" Width="Auto" Focusable="True">
+                        <Label
+                            Content="{Binding Eps.Count, BindsDirectlyToSource=True, Mode=OneWay, StringFormat=\{0:D\}, TargetNullValue=0}"
+                            Height="20" VerticalAlignment="Top" DockPanel.Dock="Right" Margin="3" />
+                        <TextBlock Height="Auto" TextWrapping="Wrap" Text="{Binding Name}" VerticalAlignment="Stretch"
+                                   DockPanel.Dock="Top" Margin="3" />
+                    </DockPanel>
+                    <ListBox x:Name="listBox" Height="Auto" ItemsSource="{Binding Eps}"
+                             ItemTemplate="{DynamicResource RectangleEps}"
+                             ItemsPanel="{DynamicResource ItemsPanelTemplate1}" Focusable="False" Foreground="{x:Null}"
+                             Style="{DynamicResource ListBoxStyle1}"
+                             ItemContainerStyle="{DynamicResource ListBoxItemStyle1}" BorderThickness="0" />
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="RectangleEps">
+            <Rectangle Height="25" Stroke="Black" Width="25" UseLayoutRounding="False" RadiusX="3" RadiusY="3"
+                       Focusable="True" Fill="#FF084983" />
+        </DataTemplate>
+        <ItemsPanelTemplate x:Key="ItemsPanelTemplate1">
+            <WrapPanel />
+        </ItemsPanelTemplate>
+        <Style x:Key="ListBoxStyle1" TargetType="{x:Type ListBox}">
+            <Setter Property="Background" Value="{x:Null}" />
+        </Style>
+
+
+        <Style x:Key="ListBoxItemStyle1" d:IsControlPart="True" TargetType="{x:Type ListBoxItem}">
+            <Setter Property="SnapsToDevicePixels" Value="true" />
+            <Setter Property="OverridesDefaultStyle" Value="true" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                        <ControlTemplate.Resources>
+                            <Storyboard x:Key="HoverOn" />
+                            <Storyboard x:Key="HoverOff" />
+                            <Storyboard x:Key="SelectedOn" />
+                            <Storyboard x:Key="SelectedOff" />
+                        </ControlTemplate.Resources>
+                        <Grid Background="{TemplateBinding Background}"
+                              Margin="1,1,1,1" SnapsToDevicePixels="true" x:Name="grid">
+                            <ContentPresenter Margin="5,3,3,3"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              x:Name="contentPresenter" />
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard Storyboard="{StaticResource HoverOn}" />
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard Storyboard="{StaticResource HoverOff}" />
+                                </Trigger.ExitActions>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="true">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard Storyboard="{StaticResource SelectedOn}" />
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard Storyboard="{StaticResource SelectedOff}" />
+                                </Trigger.ExitActions>
+                            </Trigger>
+
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="{DynamicResource DisabledForegroundBrush}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+        </Style>
+        <Style x:Key="ListBoxItemStyle2" d:IsControlPart="True" TargetType="{x:Type ListBoxItem}">
+            <Setter Property="SnapsToDevicePixels" Value="true" />
+            <Setter Property="OverridesDefaultStyle" Value="true" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                        <ControlTemplate.Resources>
+                            <Storyboard x:Key="HoverOn">
+                                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                               Storyboard.TargetName="HoverRectangle"
+                                                               Storyboard.TargetProperty="(UIElement.Opacity)">
+                                    <SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="1" />
+                                </DoubleAnimationUsingKeyFrames>
+                            </Storyboard>
+                            <Storyboard x:Key="HoverOff">
+                                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                               Storyboard.TargetName="HoverRectangle"
+                                                               Storyboard.TargetProperty="(UIElement.Opacity)">
+                                    <SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="0" />
+                                </DoubleAnimationUsingKeyFrames>
+                            </Storyboard>
+                            <Storyboard x:Key="SelectedOn">
+                                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                               Storyboard.TargetName="SelectedRectangle"
+                                                               Storyboard.TargetProperty="(UIElement.Opacity)">
+                                    <SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="1" />
+                                </DoubleAnimationUsingKeyFrames>
+                            </Storyboard>
+                            <Storyboard x:Key="SelectedOff">
+                                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                               Storyboard.TargetName="SelectedRectangle"
+                                                               Storyboard.TargetProperty="(UIElement.Opacity)">
+                                    <SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="0" />
+                                </DoubleAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </ControlTemplate.Resources>
+                        <Grid Background="{TemplateBinding Background}"
+                              Margin="1,1,1,1" SnapsToDevicePixels="true" x:Name="grid">
+                            <Rectangle x:Name="Background"
+                                       IsHitTestVisible="False"
+                                       Fill="{StaticResource SelectedBackgroundBrush}"
+                                       RadiusX="0" />
+                            <Rectangle x:Name="SelectedRectangle"
+                                       IsHitTestVisible="False"
+                                       Opacity="0"
+                                       Fill="{StaticResource NormalBrush}"
+                                       RadiusX="0" />
+                            <Rectangle x:Name="HoverRectangle"
+                                       IsHitTestVisible="False"
+                                       Fill="{StaticResource HoverBrush}"
+                                       RadiusX="0"
+                                       Opacity="0" />
+                            <ContentPresenter Margin="0" x:Name="contentPresenter" Focusable="True" />
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard Storyboard="{StaticResource HoverOn}" />
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard Storyboard="{StaticResource HoverOff}" />
+                                </Trigger.ExitActions>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="true">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard Storyboard="{StaticResource SelectedOn}" />
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard Storyboard="{StaticResource SelectedOff}" />
+                                </Trigger.ExitActions>
+                            </Trigger>
+
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="{DynamicResource DisabledForegroundBrush}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+        </Style>
+
+    </Window.Resources>
+    <toolkit:BusyIndicator IsBusy="{Binding IsBusy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" >
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="25" />
+				<RowDefinition />
+			</Grid.RowDefinitions>
+			<DockPanel LastChildFill="False" Height="Auto">
+				<Button Content="Dodaj anime" DockPanel.Dock="Right" Width="90" Margin="2"
+					Command="{Binding AddToListCommand}" />
+				<TextBox TextWrapping="Wrap" DockPanel.Dock="Top" Margin="2" Text="{Binding UrlToAnime}" />
+			</DockPanel>
+			<Grid Grid.Row="1" Margin="2">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="90*" />
+					<ColumnDefinition Width="20*" />
+				</Grid.ColumnDefinitions>
+				<ListBox x:Name="AnimesListBox" ItemsSource="{Binding Animes}" VerticalContentAlignment="Stretch"
+					Grid.IsSharedSizeScope="True" UseLayoutRounding="False" SelectionMode="Multiple"
+					HorizontalContentAlignment="Stretch" ItemContainerStyle="{DynamicResource ListBoxItemStyle2}" >
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<Grid Focusable="True">
+								<StackPanel HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto"
+									Grid.IsSharedSizeScope="True" UseLayoutRounding="False" Orientation="Vertical"
+									Focusable="True">
+									<DockPanel HorizontalAlignment="Stretch" Height="Auto" LastChildFill="False"
+										VerticalAlignment="Stretch" Width="Auto" Focusable="True">
+										<Label
+											Content="{Binding Eps.Count, BindsDirectlyToSource=True, Mode=OneWay, StringFormat=\{0:D\}, TargetNullValue=0}"
+											Height="20" VerticalAlignment="Top" DockPanel.Dock="Right" Margin="3" />
+										<TextBlock Height="Auto" TextWrapping="Wrap" Text="{Binding Name}" VerticalAlignment="Stretch"
+											DockPanel.Dock="Top" Margin="3" />
+									</DockPanel>
+									<ListBox x:Name="listBox" Height="Auto" ItemsSource="{Binding Eps}"
+										ItemTemplate="{DynamicResource RectangleEps}"
+										ItemsPanel="{DynamicResource ItemsPanelTemplate1}" Focusable="False" Foreground="{x:Null}"
+										Style="{DynamicResource ListBoxStyle1}"
+										ItemContainerStyle="{DynamicResource ListBoxItemStyle1}" BorderThickness="0" />
+								</StackPanel>
+							</Grid>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+				</ListBox>
+				<StackPanel Grid.Column="1" Margin="2">
+					<Button Content="Dodaj wybrane" Height="25" Margin="0,1,0,0" Command="{Binding AddToOhCommand}"
+						CommandParameter="{Binding SelectedItems, ElementName=AnimesListBox}" />
+					<Button Content="Dodaj wszystkie" Height="25" Margin="0,10,0,0" Command="{Binding AddAllToOhCommand}" />
+					<Button Content="Usuń wybrane" Height="25" Margin="0,10,0,0" Command="{Binding DeleteSelectedCommand}"
+						CommandParameter="{Binding SelectedItems, ElementName=AnimesListBox}" />
+					<Button Content="Usuń wszystkie" Height="25" Margin="0,10,0,0" Command="{Binding DeleteAllCommand}" />
+					<CheckBox Content="Używam IE" Margin="0,10,0,0" Visibility="Hidden" />
+					<Label Content="Czas przerwy"/>
+					<toolkit:IntegerUpDown Value="{Binding TimeToWait, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+				</StackPanel>
+				<GridSplitter Width="1" />
+			</Grid>
+
+		</Grid>
+	</toolkit:BusyIndicator>
+</Window>
