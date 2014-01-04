@@ -34,8 +34,10 @@ namespace OHHelper
 
         public MainWindowViewModel()
         {
-            var AnimeZone = new ServiceWithLink(new AnimezoneService(), "www.animezone.pl");
-            _animeParser = new AnimeParser().WithService(AnimeZone);
+            var AnimeZone = new ServiceWithLink(new AnimeZoneService(), "animezone.pl");
+            var AnimeOdcinki = new ServiceWithLink(new AnimeOdcinkiService(), "anime-odcinki.pl/articles.php");
+
+            _animeParser = new AnimeParser().WithService(AnimeZone).And(AnimeOdcinki);
 
             AddToListCommand = new ActionCommand(AddToListAction);
             AddToOhCommand = new DelegateCommand<IEnumerable>(AddToOhAction);
@@ -217,6 +219,7 @@ namespace OHHelper
             IsBusy = true;
             if (string.IsNullOrWhiteSpace(UrlToAnime))
             {
+                IsBusy = false;
                 return;
             }
             TaskScheduler scheduler = TaskScheduler.FromCurrentSynchronizationContext();
@@ -230,6 +233,7 @@ namespace OHHelper
             Anime anime = GetAnime();
             if (anime == null)
             {
+                IsBusy = false;
                 return;
             }
             Animes.Add(anime);

@@ -34,7 +34,7 @@ namespace Integration.Tests
             _browser.GoTo(UrlToAnime);
             // Act
             // Assert
-            var actualAnimeName = _browser.Element(Find.BySelector("table.spacer:nth-child(5) > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1) > div:nth-child(3) > center:nth-child(1) > h2:nth-child(1)"));
+            var actualAnimeName = _browser.Element(Find.BySelector("table.spacer:nth-child(5) > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1) > div:nth-child(3) > center:nth-child(1)"));
             string actualName = actualAnimeName.Text;
             actualName.Should().Be(AnimeTitle);
         }
@@ -59,9 +59,7 @@ namespace Integration.Tests
                 // Arrange
                 var epList = _browser.Div(
                         Find.BySelector(
-                            "table.spacer:nth-child(5) > tbody:nth-child(1) > tr:nth-child(1) > " +
-                            "td:nth-child(1) > div:nth-child(3) > " +
-                            "center:nth-child(2) > div:nth-child(2)"));
+                            "table.spacer:nth-child(5) > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1) > div:nth-child(3) > div:nth-child(5)"));
                 // Act
                 LinkCollection links = epList.Links;
                 

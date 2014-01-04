@@ -7,42 +7,57 @@ using WatiN.Core;
 
 namespace OHHelper.AnimeServices
 {
-    public class AnimezoneService : IAnimeSevice
+    public class AnimeZoneService : AnimeServiceBase
     {
-        public Anime Parse(string url)
+        public override Anime Parse(string url)
         {
-            Settings.Instance.MakeNewIeInstanceVisible = false;
-            var browser = new IE(url, false);
+            try
+            {
+                Wait(100);
+                Browser = new IE(url, false);
+                Wait(500);
 
-            if (browser.Url != url)
+                if (Browser.Url != url)
+                {
+                    throw new ArgumentException();
+                }
+                Wait(1);
+
+                var eps = new List<Ep>();
+
+                var anime = new Anime
+                {
+                    Name =
+                        Browser.Element(Find.BySelector("div.post:nth-child(1) > div:nth-child(1) > h2:nth-child(1)"))
+                            .Text,
+                    Url = url,
+                    Eps = eps
+                };
+                Wait(1);
+                var links = Browser.Table(Find.BySelector("table.border-c2")).Links.Reverse();
+                var i = 1;
+                foreach (var link in links)
+                {
+                    eps.Add(new Ep
+                    {
+                        IsCopied = false,
+                        Number = i,
+                        Url = link.Url
+                    });
+                    i++;
+                    Wait(1);
+                }
+                //Browser.ForceClose();
+                return anime;
+            }
+            catch
             {
                 return null;
             }
-
-            var eps = new List<Ep>();
-
-            var anime = new Anime
+            finally
             {
-                Name =
-                    browser.Element(Find.BySelector("div.post:nth-child(1) > div:nth-child(1) > h2:nth-child(1)"))
-                        .Text,
-                Url = url,
-                Eps = eps
-            };
-            var links = browser.Table(Find.BySelector("table.border-c2")).Links.Reverse();
-            var i = 1;
-            foreach (var link in links)
-            {
-                eps.Add(new Ep
-                {
-                    IsCopied = false,
-                    Number = i,
-                    Url = link.Url
-                });
-                i++;
+                Browser.ForceClose();
             }
-            browser.ForceClose();
-            return anime;
         }
     }
 }
