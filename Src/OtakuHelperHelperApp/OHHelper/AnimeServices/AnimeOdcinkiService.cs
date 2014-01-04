@@ -58,16 +58,17 @@ namespace OHHelper.AnimeServices
                     Wait(1);
                 }
                 //Browser.ForceClose();
-                return anime;
+                ReturnAnimeObject = anime;
             }
             catch
             {
-                return null;
+                ReturnAnimeObject = null;
             }
             finally
             {
                 Browser.ForceClose();
             }
+            return ReturnAnimeObject;
         }
     }
 }
