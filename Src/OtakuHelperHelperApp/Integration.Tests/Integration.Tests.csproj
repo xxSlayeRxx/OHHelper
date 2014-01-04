@@ -64,6 +64,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AnimeOdcinki.cs" />
+    <Compile Include="AnimeOn.cs" />
+    <Compile Include="AnimeTest.cs" />
     <Compile Include="AnimeZone.cs" />
     <Compile Include="BrowserFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

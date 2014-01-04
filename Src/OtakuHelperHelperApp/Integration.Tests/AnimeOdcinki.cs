@@ -10,9 +10,8 @@ namespace Integration.Tests
      *  	
      */
 
-    public class AnimeOdcinki : IUseFixture<BrowserFixture>
+    public class AnimeOdcinki : AnimeTest
     {
-        private IE _browser;
         private const string UrlToAnime = @"http://anime-odcinki.pl/articles.php?article_id=378";
         private const string AnimeTitle = "Kikou Shoujo wa Kizutsukanai";
         
@@ -73,12 +72,5 @@ namespace Integration.Tests
                 }
             
         }
-
-
-        public void SetFixture(BrowserFixture data)
-        {
-            _browser = data.BrowserClass;
-        }
-
     }
 }
