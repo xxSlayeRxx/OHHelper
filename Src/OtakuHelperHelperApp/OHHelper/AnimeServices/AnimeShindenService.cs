@@ -4,7 +4,7 @@ using WatiN.Core;
 
 namespace OHHelper.AnimeServices
 {
-    public class AnimeShinden : AnimeServiceBase
+    public class AnimeShindenService : AnimeServiceBase
     {
         public override Anime Parse(string url)
         {

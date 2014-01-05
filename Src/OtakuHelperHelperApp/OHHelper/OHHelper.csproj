@@ -124,7 +124,7 @@
     <Compile Include="AnimeServices\AnimeOdcinkiService.cs" />
     <Compile Include="AnimeServices\AnimeOnService.cs" />
     <Compile Include="AnimeServices\AnimeServiceBase.cs" />
-    <Compile Include="AnimeServices\AnimeShinden.cs" />
+    <Compile Include="AnimeServices\AnimeShindenService.cs" />
     <Compile Include="AnimeServices\AnimezoneService.cs" />
     <Compile Include="Ep.cs" />
     <Compile Include="IAnimeParser.cs" />

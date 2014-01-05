@@ -52,7 +52,7 @@ namespace OHHelper
             var AnimeZone = new ServiceWithLink(new AnimeZoneService(), "animezone.pl");
             var AnimeOdcinki = new ServiceWithLink(new AnimeOdcinkiService(), "anime-odcinki.pl/articles.php");
             var AnimeOn = new ServiceWithLink(new AnimeOnService(), "animeon.pl/anime/");
-            var AnimeShinden = new ServiceWithLink(new AnimeShinden(), "anime-shinden.info");
+            var AnimeShinden = new ServiceWithLink(new AnimeShindenService(), "anime-shinden.info");
             var AnimeCentrum = new ServiceWithLink(new AnimeCentrumService(), "anime-centrum.net/anime-online-pl/");
 
             // ReSharper restore InconsistentNaming
