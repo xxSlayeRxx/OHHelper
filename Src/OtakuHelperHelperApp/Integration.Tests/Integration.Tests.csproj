@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="AnimeOdcinki.cs" />
     <Compile Include="AnimeOn.cs" />
+    <Compile Include="AnimeShinden.cs" />
     <Compile Include="AnimeTest.cs" />
     <Compile Include="AnimeZone.cs" />
     <Compile Include="BrowserFixture.cs" />
