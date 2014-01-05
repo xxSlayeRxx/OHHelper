@@ -44,19 +44,7 @@ namespace OHHelper.AnimeServices
                     Find.BySelector(
                         "table.spacer:nth-child(5) > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1) > div:nth-child(3) > div:nth-child(5)"))
                     .Links.Reverse();
-                int i = 1;
-                foreach (Link link in epList)
-                {
-                    var ep = new Ep
-                    {
-                        IsCopied = false,
-                        Number = i,
-                        Url = link.Url
-                    };
-                    eps.Add(ep);
-                    i++;
-                    Wait(1);
-                }
+                GenerateEps(eps,epList);
                 //Browser.ForceClose();
                 ReturnAnimeObject = anime;
             }
@@ -66,7 +54,7 @@ namespace OHHelper.AnimeServices
             }
             finally
             {
-                Browser.ForceClose();
+                Browser.Close();
             }
             return ReturnAnimeObject;
         }

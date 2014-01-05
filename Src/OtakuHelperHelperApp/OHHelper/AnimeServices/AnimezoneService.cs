@@ -35,18 +35,9 @@ namespace OHHelper.AnimeServices
                 };
                 Wait(1);
                 var links = Browser.Table(Find.BySelector("table.border-c2")).Links.Reverse();
-                var i = 1;
-                foreach (var link in links)
-                {
-                    eps.Add(new Ep
-                    {
-                        IsCopied = false,
-                        Number = i,
-                        Url = link.Url
-                    });
-                    i++;
-                    Wait(1);
-                }
+                
+                GenerateEps(eps, links);
+
                 //Browser.ForceClose();
                 ReturnAnimeObject = anime;
             }
@@ -56,7 +47,7 @@ namespace OHHelper.AnimeServices
             }
             finally
             {
-                Browser.ForceClose();
+                Browser.Close();
             }
             return ReturnAnimeObject;
         }

@@ -14,7 +14,6 @@ using Microsoft.Expression.Interactivity.Core;
 using Microsoft.Practices.Prism.Commands;
 using OHHelper.AnimeServices;
 using OHHelper.Annotations;
-using Xceed.Wpf.Toolkit;
 using MessageBox = System.Windows.MessageBox;
 
 namespace OHHelper
@@ -36,8 +35,9 @@ namespace OHHelper
         {
             var AnimeZone = new ServiceWithLink(new AnimeZoneService(), "animezone.pl");
             var AnimeOdcinki = new ServiceWithLink(new AnimeOdcinkiService(), "anime-odcinki.pl/articles.php");
+            var AnimeOn = new ServiceWithLink(new AnimeOnService(), "animeon.pl/anime/");
 
-            _animeParser = new AnimeParser().WithService(AnimeZone).And(AnimeOdcinki);
+            _animeParser = new AnimeParser().WithService(AnimeZone).And(AnimeOdcinki).And(AnimeOn);
 
             AddToListCommand = new ActionCommand(AddToListAction);
             AddToOhCommand = new DelegateCommand<IEnumerable>(AddToOhAction);

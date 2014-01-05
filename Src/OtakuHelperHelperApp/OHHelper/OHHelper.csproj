@@ -121,6 +121,7 @@
     <Compile Include="Anime.cs" />
     <Compile Include="AnimeParser.cs" />
     <Compile Include="AnimeServices\AnimeOdcinkiService.cs" />
+    <Compile Include="AnimeServices\AnimeOnService.cs" />
     <Compile Include="AnimeServices\AnimeServiceBase.cs" />
     <Compile Include="AnimeServices\AnimezoneService.cs" />
     <Compile Include="Ep.cs" />
