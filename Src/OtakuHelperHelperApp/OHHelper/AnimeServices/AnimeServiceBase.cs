@@ -14,6 +14,7 @@ namespace OHHelper.AnimeServices
         protected AnimeServiceBase()
         {
             Settings.Instance.MakeNewIeInstanceVisible = false;
+            Settings.Instance.AutoMoveMousePointerToTopLeft = false;
         }
 
         public abstract Anime Parse(string url);
