@@ -11,12 +11,6 @@ namespace Integration.Tests
         private const string UrlToAnime = "http://www.animezone.pl/odcinki-online_kikou-shoujo-wa-kizutsukanai";
         private const string AnimeTitle = "Kikou Shoujo wa Kizutsukanai";
 
-        //public AnimeZone()
-        //{
-        //    _browser = new IE {AutoClose = true};
-        //}
-
-        //div.post:nth-child(1) > div:nth-child(1) > h2:nth-child(1)
 
         // There is page in selected anime
         [Fact]
