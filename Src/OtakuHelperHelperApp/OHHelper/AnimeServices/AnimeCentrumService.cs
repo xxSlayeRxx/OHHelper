@@ -44,7 +44,7 @@ namespace OHHelper.AnimeServices
                 }
                 finally
                 {
-                    Browser.Close();
+                    CleanUp();
                 }
             }
 
