@@ -20,7 +20,7 @@ namespace OHHelper
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
-        private readonly IAnimeParser _animeParser;
+        private IAnimeParser _animeParser;
         private ICommand _addAllToOhCommand;
         private ICommand _addToListCommand;
         private ICommand _addToOhCommand;
@@ -33,11 +33,7 @@ namespace OHHelper
 
         public MainWindowViewModel()
         {
-            var AnimeZone = new ServiceWithLink(new AnimeZoneService(), "animezone.pl");
-            var AnimeOdcinki = new ServiceWithLink(new AnimeOdcinkiService(), "anime-odcinki.pl/articles.php");
-            var AnimeOn = new ServiceWithLink(new AnimeOnService(), "animeon.pl/anime/");
-
-            _animeParser = new AnimeParser().WithService(AnimeZone).And(AnimeOdcinki).And(AnimeOn);
+            InitializeAnimeParser();
 
             AddToListCommand = new ActionCommand(AddToListAction);
             AddToOhCommand = new DelegateCommand<IEnumerable>(AddToOhAction);
@@ -48,6 +44,16 @@ namespace OHHelper
             Animes = new ObservableCollection<Anime>();
 
             TimeToWait = 150;
+        }
+
+        private void InitializeAnimeParser()
+        {
+            var AnimeZone = new ServiceWithLink(new AnimeZoneService(), "animezone.pl");
+            var AnimeOdcinki = new ServiceWithLink(new AnimeOdcinkiService(), "anime-odcinki.pl/articles.php");
+            var AnimeOn = new ServiceWithLink(new AnimeOnService(), "animeon.pl/anime/");
+            var AnimeShinden = new ServiceWithLink(new AnimeShinden(), "anime-shinden.info");
+
+            _animeParser = new AnimeParser().WithService(AnimeZone).And(AnimeOdcinki).And(AnimeOn).And(AnimeShinden);
         }
 
         public bool IsBusy
