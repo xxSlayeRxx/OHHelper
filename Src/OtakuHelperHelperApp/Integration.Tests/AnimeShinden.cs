@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System.Linq;
+using FluentAssertions;
 using WatiN.Core;
 using Xunit;
 using Xunit.Extensions;
@@ -50,10 +51,12 @@ namespace Integration.Tests
 
             // Act
             _browser.GoTo(UrlToAnime);
-            var link = _browser.Link(Find.ByUrl(UrlToAnime));
+            var animeLink = UrlToAnime.Replace("http://www.anime-shinden.info/",
+                        "http://www.anime-shinden.info/online-glowna/");
+            var link = _browser.Link(Find.ByUrl(animeLink));
             var animeTitle = link.Text.Replace(" (Online)",string.Empty).Trim();
             // Assert
-            link.GetAttributeValue("href").Should().Be(UrlToAnime);
+            link.GetAttributeValue("href").Should().Be(animeLink);
             animeTitle.Should().Be(AnimeTitle);
         }
 
@@ -65,8 +68,9 @@ namespace Integration.Tests
 
             // Act
             _browser.GoTo(UrlToAnime);
-            var div = _browser.Div(Find.ById("news-id-26417"));
+            var div = _browser.Div(Find.ById(d => d.Contains("news-id-")));
             // Assert
+
             div.Links.Should().NotBeEmpty();
 
             foreach (var link in div.Links)

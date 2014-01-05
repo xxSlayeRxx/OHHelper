@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.Windows.Controls;
 using WatiN.Core;
 
 namespace OHHelper.AnimeServices
@@ -47,7 +49,8 @@ namespace OHHelper.AnimeServices
             }
             finally
             {
-                Browser.Close();
+                CleanUp();
+
             }
             return ReturnAnimeObject;
         }

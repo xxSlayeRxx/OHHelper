@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using WatiN.Core;
 
 namespace OHHelper.AnimeServices
@@ -23,8 +24,9 @@ namespace OHHelper.AnimeServices
                     Wait(1);
 
                     var eps = new List<Ep>();
-
-                    var link = Browser.Link(Find.ByUrl(url));
+                    var animeLink = url.Replace("http://www.anime-shinden.info/",
+                        "http://www.anime-shinden.info/online-glowna/");
+                    var link = Browser.Link(Find.ByUrl(animeLink));
                     var animeTitle = link.Text.Replace(" (Online)", string.Empty).Trim();
                     var anime = new Anime()
                     {
@@ -33,8 +35,8 @@ namespace OHHelper.AnimeServices
                         Eps = eps
                     };
 
-                    var links = Browser.Div(Find.ById("news-id-26417")).Links;
-
+                    var links = Browser.Div(Find.ById(d => d.Contains("news-id-"))).Links;
+                    
                     GenerateEps(eps, links);
 
                     ReturnAnimeObject = anime;
@@ -46,7 +48,7 @@ namespace OHHelper.AnimeServices
                 }
                 finally
                 {
-                    Browser.Close();
+                    CleanUp();
                 }
             }
 

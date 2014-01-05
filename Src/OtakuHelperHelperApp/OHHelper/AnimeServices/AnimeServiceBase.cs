@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Windows.Threading;
 using WatiN.Core;
@@ -44,6 +45,23 @@ namespace OHHelper.AnimeServices
                 eps.Add(ep);
                 i++;
                 Wait(1);
+            }
+        }
+
+        protected void CleanUp()
+        {
+            Browser.Close();
+            if (Browser != null)
+            {
+                try
+                {
+                    var ie = Process.GetProcessById(Browser.ProcessID);
+                    ie.Kill();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
             }
         }
     }
