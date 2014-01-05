@@ -48,12 +48,15 @@ namespace OHHelper
 
         private void InitializeAnimeParser()
         {
+            // ReSharper disable InconsistentNaming
             var AnimeZone = new ServiceWithLink(new AnimeZoneService(), "animezone.pl");
             var AnimeOdcinki = new ServiceWithLink(new AnimeOdcinkiService(), "anime-odcinki.pl/articles.php");
             var AnimeOn = new ServiceWithLink(new AnimeOnService(), "animeon.pl/anime/");
             var AnimeShinden = new ServiceWithLink(new AnimeShinden(), "anime-shinden.info");
+            var AnimeCentrum = new ServiceWithLink(new AnimeCentrumService(), "anime-centrum.net/anime-online-pl/");
 
-            _animeParser = new AnimeParser().WithService(AnimeZone).And(AnimeOdcinki).And(AnimeOn).And(AnimeShinden);
+            // ReSharper restore InconsistentNaming
+            _animeParser = new AnimeParser().WithService(AnimeZone).And(AnimeOdcinki).And(AnimeOn).And(AnimeShinden).And(AnimeCentrum);
         }
 
         public bool IsBusy
