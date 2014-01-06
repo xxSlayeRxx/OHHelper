@@ -6,7 +6,7 @@
     x:Class="OHHelper.MainWindow"
     xmlns:my="clr-namespace:OHHelper"
 	xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
-    Title="OHHelper" Height="350" Width="525" Background="#FF2D2D2D">
+    Title="OHHelper" Height="480" Width="640" Background="#FF2D2D2D">
     <Window.DataContext>
         <my:MainWindowViewModel />
     </Window.DataContext>
@@ -226,9 +226,12 @@
 					<Button Content="Usuń wybrane" Height="25" Margin="0,10,0,0" Command="{Binding DeleteSelectedCommand}"
 						CommandParameter="{Binding SelectedItems, ElementName=AnimesListBox}" />
 					<Button Content="Usuń wszystkie" Height="25" Margin="0,10,0,0" Command="{Binding DeleteAllCommand}" />
-					<CheckBox Content="Używam IE" Margin="0,10,0,0" Visibility="Hidden" />
-					<Label Content="Czas przerwy"/>
+                    <Label Content="Czas przerwy" Margin="0,30,0,0"/>
 					<toolkit:IntegerUpDown Value="{Binding TimeToWait, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Label Content="Diff Login"  Margin="0,30,0,0"/>
+                    <TextBox Text="{Binding Path=DiffAnimeCredentials.Login, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Label Content="Diff Pass" />
+                    <TextBox Text="{Binding Path=DiffAnimeCredentials.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 				</StackPanel>
 				<GridSplitter Width="1" />
 			</Grid>

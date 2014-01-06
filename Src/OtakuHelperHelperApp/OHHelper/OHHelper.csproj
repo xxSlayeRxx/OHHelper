@@ -126,6 +126,8 @@
     <Compile Include="AnimeServices\AnimeServiceBase.cs" />
     <Compile Include="AnimeServices\AnimeShindenService.cs" />
     <Compile Include="AnimeServices\AnimezoneService.cs" />
+    <Compile Include="AnimeServices\DiffAnimeCredentials.cs" />
+    <Compile Include="AnimeServices\DiffAnimeService.cs" />
     <Compile Include="Ep.cs" />
     <Compile Include="IAnimeParser.cs" />
     <Compile Include="IAnimeSevice.cs" />

@@ -30,6 +30,7 @@ namespace OHHelper
         private string _urlToAnime;
         private int _timeToWait;
         private bool _isBusy;
+        private DiffAnimeCredentials _diffAnimeCredentials;
 
         public MainWindowViewModel()
         {
@@ -54,9 +55,20 @@ namespace OHHelper
             var AnimeOn = new ServiceWithLink(new AnimeOnService(), "animeon.pl/anime/");
             var AnimeShinden = new ServiceWithLink(new AnimeShindenService(), "anime-shinden.info");
             var AnimeCentrum = new ServiceWithLink(new AnimeCentrumService(), "anime-centrum.net/anime-online-pl/");
-
+            var DiffAnime = new ServiceWithLink(new DiffAnimeService(DiffAnimeCredentials), "diff-anime.pl/anime/");
             // ReSharper restore InconsistentNaming
-            _animeParser = new AnimeParser().WithService(AnimeZone).And(AnimeOdcinki).And(AnimeOn).And(AnimeShinden).And(AnimeCentrum);
+            _animeParser = new AnimeParser().WithService(AnimeZone).And(AnimeOdcinki).And(AnimeOn).And(AnimeShinden).And(AnimeCentrum).And(DiffAnime);
+        }
+
+        public DiffAnimeCredentials DiffAnimeCredentials
+        {
+            get { return _diffAnimeCredentials; }
+            set
+            {
+                if (Equals(value, _diffAnimeCredentials)) return;
+                _diffAnimeCredentials = value;
+                OnPropertyChanged();
+            }
         }
 
         public bool IsBusy
