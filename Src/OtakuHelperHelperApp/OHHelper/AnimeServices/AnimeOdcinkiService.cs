@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using WatiN.Core;
+using WatiN.Core.Native.InternetExplorer;
 
 namespace OHHelper.AnimeServices
 {
@@ -27,10 +28,7 @@ namespace OHHelper.AnimeServices
 
                 var eps = new List<Ep>();
 
-                Element actualAnimeName =
-                    Browser.Element(
-                        Find.BySelector(
-                            "table.spacer:nth-child(5) > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1) > div:nth-child(3) > center:nth-child(1)"));
+                Element actualAnimeName = Browser.Link(l => l.Url == url);
 
                 Wait(1);
                 var anime = new Anime
@@ -40,10 +38,10 @@ namespace OHHelper.AnimeServices
                     Eps = eps
                 };
                 Wait(1);
-                IEnumerable<Link> epList = Browser.Div(
-                    Find.BySelector(
-                        "table.spacer:nth-child(5) > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1) > div:nth-child(3) > div:nth-child(5)"))
-                    .Links.Reverse();
+                var td = Browser.TableCell(
+                    Find.BySelector("table.spacer:nth-child(5) > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1)"));
+
+                var epList = td.Div(d => d.GetAttributeValue("align") == "center").Links.Reverse();
                 GenerateEps(eps,epList);
                 //Browser.ForceClose();
                 ReturnAnimeObject = anime;
