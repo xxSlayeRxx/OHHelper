@@ -172,14 +172,16 @@ namespace OHHelper
             var DiffAnime = new ServiceWithLink(new DiffAnimeService(DiffAnimeCredentials), "diff-anime.pl/anime/");
             // WbijamInneAnime must be before WbijamMainAnime, becouse inne.wbijam.pl contains wbijam.pl
             var WbijamInneAnime = new ServiceWithLink(new WbijamInneAnimeService(), "inne.wbijam.pl");
-            var WbijamMainAnime = new ServiceWithLink(new WbijamMainAnimeService(), ".wbijam.pl");
+            var WbijamMainAnime = new ServiceWithLink(new WbijamMainAnimeService(), "wbijam.pl");
+            var ShindenHentai = new ServiceWithLink(new ShindenHentaiService(), "shinden-hentai.info/");
             // ReSharper restore InconsistentNaming
             _animeParser = new AnimeParser().WithService(AnimeZone)
                 .And(AnimeOdcinki)
                 .And(AnimeOn)
                 .And(AnimeShinden)
                 .And(AnimeCentrum)
-                .And(DiffAnime).And(WbijamInneAnime).And(WbijamMainAnime);
+                .And(DiffAnime).And(WbijamInneAnime).And(WbijamMainAnime)
+                .And(ShindenHentai);
         }
 
         private void DeleteAllAction()

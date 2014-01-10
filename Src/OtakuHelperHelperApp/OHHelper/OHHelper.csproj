@@ -128,6 +128,7 @@
     <Compile Include="AnimeServices\AnimezoneService.cs" />
     <Compile Include="AnimeServices\DiffAnimeCredentials.cs" />
     <Compile Include="AnimeServices\DiffAnimeService.cs" />
+    <Compile Include="AnimeServices\ShindenHentaiService.cs" />
     <Compile Include="AnimeServices\WbijamInneAnimeService.cs" />
     <Compile Include="AnimeServices\WbijamMainAnimeService.cs" />
     <Compile Include="Ep.cs" />
