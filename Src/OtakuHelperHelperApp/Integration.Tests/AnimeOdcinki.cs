@@ -1,5 +1,7 @@
-﻿using FluentAssertions;
+﻿using System.Runtime.InteropServices;
+using FluentAssertions;
 using WatiN.Core;
+using WatiN.Core.DialogHandlers;
 using Xunit;
 
 namespace Integration.Tests
@@ -33,7 +35,7 @@ namespace Integration.Tests
             _browser.GoTo(UrlToAnime);
             // Act
             // Assert
-            var actualAnimeName = _browser.Element(Find.BySelector("table.spacer:nth-child(5) > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1) > div:nth-child(3) > center:nth-child(1)"));
+            var actualAnimeName = _browser.Link(l => l.Url == UrlToAnime);
             string actualName = actualAnimeName.Text;
             actualName.Should().Be(AnimeTitle);
         }
@@ -55,21 +57,24 @@ namespace Integration.Tests
         [Fact]
         public void Selected_url_contains_anime_links()
         {
-                // Arrange
-                var epList = _browser.Div(
-                        Find.BySelector(
-                            "table.spacer:nth-child(5) > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1) > div:nth-child(3) > div:nth-child(5)"));
-                // Act
-                LinkCollection links = epList.Links;
+            // Arrange
+            var td =
+                _browser.TableCell(
+                    Find.BySelector("table.spacer:nth-child(5) > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1)"));
+
+            var epList = td.Div(d => d.GetAttributeValue("align") == "center");
                 
-                // Assert
+            // Act
+            LinkCollection links = epList.Links;
+                
+            // Assert
 
 
-                foreach (var link in links)
-                {
-                    link.Text.Should().Contain(AnimeTitle);
-                    link.GetAttributeValue("href").Should().Contain("viewpage.php?page_id");
-                }
+            foreach (var link in links)
+            {
+                link.Text.Should().Contain(AnimeTitle);
+                link.GetAttributeValue("href").Should().Contain("viewpage.php?page_id");
+            }
             
         }
     }
