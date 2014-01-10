@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading;
 using FluentAssertions;
 using WatiN.Core;
 using Xunit;
@@ -32,11 +33,13 @@ namespace Integration.Tests
 
             // Act
             _browser.GoTo(UrlToAnime + "aasd");
+            Thread.Sleep(500);
+
             // Assert
             _browser.Text.Should().Contain("Żądana strona nie została odnaleziona.");
 
             _browser.GoTo("http://www.anime-shinden.info/264172-kikou-shoujo-wa-kizutsasdsukanai-onliane.html");
-
+            Thread.Sleep(500);
             _browser.Text.Should()
                 .Contain(
                     "Nie można odnaleźć artykułu! Prawdopodobnie został on usunięty lub adres do niego został zmieniony. Proszę użyć wyszukiwarki.");

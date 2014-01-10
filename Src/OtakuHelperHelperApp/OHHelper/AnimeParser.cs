@@ -7,7 +7,7 @@ namespace OHHelper
 {
     public class AnimeParser : IAnimeParser
     {
-        private List<ServiceWithLink> _services;
+        private readonly List<ServiceWithLink> _services;
 
         public AnimeParser()
         {
@@ -16,7 +16,7 @@ namespace OHHelper
 
         public Anime Parse(string url)
         {
-            var service = _services.SingleOrDefault(s => url.Contains(s.PartOfLink));
+            var service = _services.FirstOrDefault(s => url.Contains(s.PartOfLink));
             return service == null ? null : service.AnimeSevice.Parse(url);
         }
 

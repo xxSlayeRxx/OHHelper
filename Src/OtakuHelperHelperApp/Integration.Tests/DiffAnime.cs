@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using FluentAssertions;
 using WatiN.Core;
 using WatiN.Core.Exceptions;
@@ -48,9 +49,12 @@ namespace Integration.Tests
 
             // Act
             _browser.GoTo("http://diff-anime.pl/anime/2d98/kikou-shoujo-wa-kizutsukanaia");
-            _browser.Text.Should().BeNullOrWhiteSpace();
+            Thread.Sleep(500);
+
+            _browser.Text.Should().Contain("meta.name = PageContext.META; meta.content =");
 
             _browser.GoTo("http://diff-anime.pl/anime/29118/kikou-shoujo-wa-kizutsukanaia");
+            Thread.Sleep(500);
             _browser.Text.Should().Contain("Seria nie została znaleziona.");
         }
 

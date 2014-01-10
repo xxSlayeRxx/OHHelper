@@ -72,6 +72,8 @@
     <Compile Include="BrowserFixture.cs" />
     <Compile Include="DiffAnime.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WbijamInneAnime.cs" />
+    <Compile Include="WbijamMainAnime.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

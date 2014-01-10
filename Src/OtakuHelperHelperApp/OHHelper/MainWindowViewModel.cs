@@ -14,23 +14,22 @@ using Microsoft.Expression.Interactivity.Core;
 using Microsoft.Practices.Prism.Commands;
 using OHHelper.AnimeServices;
 using OHHelper.Annotations;
-using MessageBox = System.Windows.MessageBox;
 
 namespace OHHelper
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
-        private IAnimeParser _animeParser;
         private ICommand _addAllToOhCommand;
         private ICommand _addToListCommand;
         private ICommand _addToOhCommand;
+        private IAnimeParser _animeParser;
         private ObservableCollection<Anime> _animes;
         private ICommand _deleteAllCommand;
         private ICommand _deleteSelectedCommand;
-        private string _urlToAnime;
-        private int _timeToWait;
-        private bool _isBusy;
         private DiffAnimeCredentials _diffAnimeCredentials;
+        private bool _isBusy;
+        private int _timeToWait;
+        private string _urlToAnime;
 
         public MainWindowViewModel()
         {
@@ -45,19 +44,6 @@ namespace OHHelper
             Animes = new ObservableCollection<Anime>();
 
             TimeToWait = 150;
-        }
-
-        private void InitializeAnimeParser()
-        {
-            // ReSharper disable InconsistentNaming
-            var AnimeZone = new ServiceWithLink(new AnimeZoneService(), "animezone.pl");
-            var AnimeOdcinki = new ServiceWithLink(new AnimeOdcinkiService(), "anime-odcinki.pl/articles.php");
-            var AnimeOn = new ServiceWithLink(new AnimeOnService(), "animeon.pl/anime/");
-            var AnimeShinden = new ServiceWithLink(new AnimeShindenService(), "anime-shinden.info");
-            var AnimeCentrum = new ServiceWithLink(new AnimeCentrumService(), "anime-centrum.net/anime-online-pl/");
-            var DiffAnime = new ServiceWithLink(new DiffAnimeService(DiffAnimeCredentials), "diff-anime.pl/anime/");
-            // ReSharper restore InconsistentNaming
-            _animeParser = new AnimeParser().WithService(AnimeZone).And(AnimeOdcinki).And(AnimeOn).And(AnimeShinden).And(AnimeCentrum).And(DiffAnime);
         }
 
         public DiffAnimeCredentials DiffAnimeCredentials
@@ -175,6 +161,27 @@ namespace OHHelper
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        private void InitializeAnimeParser()
+        {
+            // ReSharper disable InconsistentNaming
+            var AnimeZone = new ServiceWithLink(new AnimeZoneService(), "animezone.pl");
+            var AnimeOdcinki = new ServiceWithLink(new AnimeOdcinkiService(), "anime-odcinki.pl/articles.php");
+            var AnimeOn = new ServiceWithLink(new AnimeOnService(), "animeon.pl/anime/");
+            var AnimeShinden = new ServiceWithLink(new AnimeShindenService(), "anime-shinden.info");
+            var AnimeCentrum = new ServiceWithLink(new AnimeCentrumService(), "anime-centrum.net/anime-online-pl/");
+            var DiffAnime = new ServiceWithLink(new DiffAnimeService(DiffAnimeCredentials), "diff-anime.pl/anime/");
+            // WbijamInneAnime must be before WbijamMainAnime, becouse inne.wbijam.pl contains wbijam.pl
+            var WbijamInneAnime = new ServiceWithLink(new WbijamInneAnimeService(), "inne.wbijam.pl");
+            var WbijamMainAnime = new ServiceWithLink(new WbijamMainAnimeService(), ".wbijam.pl");
+            // ReSharper restore InconsistentNaming
+            _animeParser = new AnimeParser().WithService(AnimeZone)
+                .And(AnimeOdcinki)
+                .And(AnimeOn)
+                .And(AnimeShinden)
+                .And(AnimeCentrum)
+                .And(DiffAnime).And(WbijamInneAnime).And(WbijamMainAnime);
+        }
+
         private void DeleteAllAction()
         {
             Animes.Clear();
@@ -227,11 +234,11 @@ namespace OHHelper
         private void Wait(int miliseconds)
         {
             var frame = new DispatcherFrame();
-            new Thread((ThreadStart)(() =>
+            new Thread(() =>
             {
                 Thread.Sleep(TimeSpan.FromMilliseconds(miliseconds));
                 frame.Continue = false;
-            })).Start();
+            }).Start();
             Dispatcher.PushFrame(frame);
         }
 
